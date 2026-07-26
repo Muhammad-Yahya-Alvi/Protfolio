@@ -1,0 +1,14 @@
+﻿# System Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+
+# Local Env and Deployments
+.env
+.env.local
+.vercel/

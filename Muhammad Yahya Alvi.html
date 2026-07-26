@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Muhammad Yahya Alvi — Software Engineer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --bg:#0b0d10;
+  --panel:#12151a;
+  --accent:#5eead4;
+  --accent2:#818cf8;
+  --text:#e7ebf0;
+  --muted:#8a93a3;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden;}
+canvas#bg{position:fixed;inset:0;z-index:0;}
+.wrap{position:relative;z-index:1;}
+
+nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
+  padding:20px 6%;z-index:10;backdrop-filter:blur(8px);background:rgba(11,13,16,0.5);}
+nav .logo{font-weight:700;letter-spacing:2px;color:var(--accent);}
+nav ul{list-style:none;display:flex;gap:28px;}
+nav a{color:var(--muted);text-decoration:none;font-size:14px;transition:.3s;}
+nav a:hover{color:var(--accent);}
+
+section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 8%;}
+
+.hero-flex{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.hero-text{flex:1;min-width:300px;}
+.hero-visual{flex:0 0 340px;display:flex;justify-content:center;position:relative;}
+.orb{
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#1c2530,#0b0d10 70%);
+  border:1px solid #1e232b;position:relative;
+  animation:float 5s ease-in-out infinite;
+  box-shadow:0 0 60px rgba(94,234,212,.08);
+}
+.orb::before{
+  content:'';position:absolute;inset:-2px;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--accent),var(--accent2),transparent 60%);
+  z-index:-1;animation:spin 6s linear infinite;filter:blur(2px);opacity:.6;
+}
+.orb .avatar{
+  position:absolute;inset:6px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#0e1116;overflow:hidden;
+}
+.orb .avatar svg{width:70%;height:70%;}
+.float-chip{
+  position:absolute;background:var(--panel);border:1px solid #1e232b;border-radius:12px;
+  padding:8px 14px;font-size:.78rem;color:var(--accent);font-weight:600;
+  box-shadow:0 10px 20px rgba(0,0,0,.4);
+}
+.chip1{top:0;left:-10px;animation:floatChip 4s ease-in-out infinite;}
+.chip2{bottom:20px;right:-20px;animation:floatChip 4.5s ease-in-out infinite .5s;}
+.chip3{bottom:-10px;left:40px;animation:floatChip 3.8s ease-in-out infinite 1s;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+@keyframes floatChip{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.hero h1{font-size:clamp(2.5rem,7vw,5rem);line-height:1.05;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;animation:rise 1s .2s forwards;}
+.hero p{margin-top:18px;color:var(--muted);max-width:560px;font-size:1.1rem;opacity:0;animation:rise 1s .5s forwards;}
+.hero .tag{color:var(--accent);font-size:14px;letter-spacing:3px;text-transform:uppercase;opacity:0;animation:rise 1s 0s forwards;}
+.hero .btns{margin-top:34px;display:flex;gap:16px;opacity:0;animation:rise 1s .8s forwards;}
+.btn{padding:12px 26px;border-radius:30px;text-decoration:none;font-size:14px;font-weight:600;
+  transition:.3s;border:1px solid var(--accent);color:var(--accent);}
+.btn.filled{background:var(--accent);color:#0b0d10;}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(94,234,212,.2);}
+
+@keyframes rise{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s ease;}
+.reveal.show{opacity:1;transform:translateY(0);}
+
+h2.section-title{font-size:2.2rem;margin-bottom:40px;}
+h2.section-title span{color:var(--accent);}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
+.card{background:var(--panel);border:1px solid #1e232b;border-radius:16px;padding:28px;transition:.35s;position:relative;overflow:hidden;}
+.card:hover{transform:translateY(-8px);border-color:var(--accent);box-shadow:0 20px 40px rgba(0,0,0,.4);}
+.card h3{color:var(--accent);margin-bottom:10px;font-size:1.15rem;}
+.card p{color:var(--muted);font-size:.92rem;line-height:1.5;}
+.card .lang{display:inline-block;margin-top:14px;font-size:.75rem;color:var(--accent2);border:1px solid var(--accent2);padding:3px 10px;border-radius:20px;}
+.card a.view{display:inline-block;margin-top:16px;color:var(--accent);text-decoration:none;font-size:.85rem;font-weight:600;}
+.card a.view:hover{text-decoration:underline;}
+
+.contact{align-items:center;text-align:center;}
+.skillbar{margin-bottom:18px;}
+.skillbar .label{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);margin-bottom:6px;}
+.skillbar .track{height:8px;background:#1e232b;border-radius:4px;overflow:hidden;}
+.skillbar .fill{height:100%;width:0;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 1.4s ease;}
+.contact .links{display:flex;gap:26px;margin-top:26px;justify-content:center;flex-wrap:wrap;}
+.contact a{color:var(--accent);text-decoration:none;}
+
+footer{text-align:center;padding:30px;color:var(--muted);font-size:.8rem;}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="wrap">
+
+<nav>
+  <div class="logo">YA</div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="home" class="hero">
+  <div class="hero-flex">
+    <div class="hero-text">
+      <div class="tag">Software Engineering Student · Java Developer</div>
+      <h1>Muhammad Yahya Alvi</h1>
+      <p>Building real-world projects, one commit at a time.</p>
+      <div class="btns">
+        <a class="btn filled" href="#projects">See my work</a>
+        <a class="btn" href="https://github.com/Muhammad-Yahya-Alvi" target="_blank">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="orb">
+        <div class="avatar">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="glow" cx="50%" cy="60%" r="60%">
+                <stop offset="0%" stop-color="#5eead4" stop-opacity=".35"/>
+                <stop offset="100%" stop-color="#5eead4" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="200" height="200" fill="#0a0d11"/>
+            <circle cx="100" cy="120" r="70" fill="url(#glow)"/>
+
+            <!-- floating browser window: globe -->
+            <g opacity=".9">
+              <rect x="8" y="24" width="62" height="44" rx="4" fill="none" stroke="#5eead4" stroke-width="1.6"/>
+              <line x1="8" y1="34" x2="70" y2="34" stroke="#5eead4" stroke-width="1.4"/>
+              <circle cx="14" cy="29" r="1.4" fill="#5eead4"/><circle cx="19" cy="29" r="1.4" fill="#5eead4"/><circle cx="24" cy="29" r="1.4" fill="#5eead4"/>
+              <circle cx="30" cy="52" r="11" fill="none" stroke="#5eead4" stroke-width="1.4"/>
+              <line x1="19" y1="52" x2="41" y2="52" stroke="#5eead4" stroke-width="1"/>
+              <path d="M30 41c-5 5-5 17 0 22M30 41c5 5 5 17 0 22" stroke="#5eead4" stroke-width="1" fill="none"/>
+              <line x1="46" y1="47" x2="65" y2="47" stroke="#5eead4" stroke-width="1.2"/>
+              <line x1="46" y1="53" x2="60" y2="53" stroke="#5eead4" stroke-width="1.2"/>
+              <animateTransform attributeName="transform" type="translate" values="0 0;0 -5;0 0" dur="3.2s" repeatCount="indefinite"/>
+            </g>
+
+            <!-- floating browser window: www -->
+            <g opacity=".9">
+              <rect x="130" y="18" width="62" height="40" rx="4" fill="none" stroke="#818cf8" stroke-width="1.6"/>
+              <line x1="130" y1="28" x2="192" y2="28" stroke="#818cf8" stroke-width="1.4"/>
+              <circle cx="136" cy="23" r="1.4" fill="#818cf8"/><circle cx="141" cy="23" r="1.4" fill="#818cf8"/><circle cx="146" cy="23" r="1.4" fill="#818cf8"/>
+              <text x="140" y="47" font-size="13" fill="#818cf8" font-family="monospace">www.</text>
+              <animateTransform attributeName="transform" type="translate" values="0 0;0 6;0 0" dur="3.6s" repeatCount="indefinite"/>
+            </g>
+
+            <!-- floating browser window: lines -->
+            <g opacity=".85">
+              <rect x="132" y="112" width="60" height="46" rx="4" fill="none" stroke="#5eead4" stroke-width="1.6"/>
+              <line x1="132" y1="122" x2="192" y2="122" stroke="#5eead4" stroke-width="1.4"/>
+              <circle cx="138" cy="117" r="1.4" fill="#5eead4"/><circle cx="143" cy="117" r="1.4" fill="#5eead4"/><circle cx="148" cy="117" r="1.4" fill="#5eead4"/>
+              <rect x="140" y="130" width="22" height="14" fill="none" stroke="#5eead4" stroke-width="1"/>
+              <line x1="167" y1="132" x2="186" y2="132" stroke="#5eead4" stroke-width="1"/>
+              <line x1="167" y1="137" x2="186" y2="137" stroke="#5eead4" stroke-width="1"/>
+              <line x1="167" y1="142" x2="180" y2="142" stroke="#5eead4" stroke-width="1"/>
+              <animateTransform attributeName="transform" type="translate" values="0 0;0 -6;0 0" dur="4s" repeatCount="indefinite"/>
+            </g>
+
+            <!-- silhouette figure -->
+            <path d="M100 195c-30 0-45-14-45-32 0-30 20-40 20-56 0-14 11-24 25-24s25 10 25 24c0 16 20 26 20 56 0 18-15 32-45 32z" fill="#05070a"/>
+            <path d="M60 175c8-10 22-13 40-13s32 3 40 13" stroke="#5eead4" stroke-width="1" opacity=".3" fill="none"/>
+          </svg>
+        </div>
+      </div>
+      <div class="float-chip chip1">☕ Java</div>
+      <div class="float-chip chip2">🗄️ MySQL</div>
+      <div class="float-chip chip3">🔧 OOP</div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2 class="section-title reveal">About <span>Me</span></h2>
+  <p class="reveal" style="max-width:680px;color:var(--muted);font-size:1.08rem;line-height:1.8;">
+    I'm a Software Engineering student at Sindh Madressatul Islam University (SMIU), driven by a genuine
+    curiosity for how software is built and how it can solve real problems. My focus sits around Java,
+    object-oriented design, and MySQL, and I like taking an idea all the way from a blank editor to a working
+    system — attendance trackers, library systems, admission platforms — rather than just studying theory.
+    I care about writing code that's clean and maintainable, and every project is another rep at getting
+    better as an engineer. Currently expanding into full-stack development and Spring Boot.
+  </p>
+</section>
+
+<section id="projects">
+  <h2 class="section-title reveal">GitHub <span>Projects</span></h2>
+  <div class="grid reveal">
+    <div class="card">
+      <h3>SMIU Attendance Management System</h3>
+      <p>A system built to manage and track student attendance at SMIU, handling records and reporting in one place.</p>
+      <span class="lang">C</span>
+      <br><a class="view" href="https://github.com/Muhammad-Yahya-Alvi/SMIU-Attendance-Management-System" target="_blank">View on GitHub ↗</a>
+    </div>
+    <div class="card">
+      <h3>Library Management System</h3>
+      <p>Handles the day-to-day operations of a library — books, members, and transactions like checkouts and returns — in a single solution.</p>
+      <span class="lang">TypeScript</span>
+      <br><a class="view" href="https://github.com/Muhammad-Yahya-Alvi/library-management-system" target="_blank">View on GitHub ↗</a>
+    </div>
+    <div class="card">
+      <h3>University Admission System</h3>
+      <p>A professional admission management system built with Java Swing and MySQL, featuring a modern UI, secure authentication, and a centralized admin dashboard.</p>
+      <span class="lang">Java · MySQL</span>
+      <br><a class="view" href="https://github.com/Muhammad-Yahya-Alvi/UniversityAdmissionSystem" target="_blank">View on GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title reveal">Skills <span>Graph</span></h2>
+  <p class="reveal" style="color:var(--muted);margin-bottom:36px;max-width:600px;">Based on my GitHub profile & repositories.</p>
+  <div class="skillbox reveal" style="max-width:640px;width:100%;">
+    <div class="skillbar"><div class="label"><span>Java</span><span>90%</span></div><div class="track"><div class="fill" data-w="90"></div></div></div>
+    <div class="skillbar"><div class="label"><span>MySQL</span><span>85%</span></div><div class="track"><div class="fill" data-w="85"></div></div></div>
+    <div class="skillbar"><div class="label"><span>C / C++</span><span>75%</span></div><div class="track"><div class="fill" data-w="75"></div></div></div>
+    <div class="skillbar"><div class="label"><span>TypeScript</span><span>65%</span></div><div class="track"><div class="fill" data-w="65"></div></div></div>
+    <div class="skillbar"><div class="label"><span>Python</span><span>55%</span></div><div class="track"><div class="fill" data-w="55"></div></div></div>
+    <div class="skillbar"><div class="label"><span>Git & GitHub</span><span>80%</span></div><div class="track"><div class="fill" data-w="80"></div></div></div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <h2 class="section-title reveal">Let's <span>Connect</span></h2>
+  <p class="reveal" style="color:var(--muted);">Open to opportunities and collaboration.</p>
+  <div class="links reveal">
+    <a href="mailto:yahyaalvi727@gmail.com">✉️ yahyaalvi727@gmail.com</a>
+    <a href="https://discord.com/users/muhammadyahyaalvi" target="_blank">🎮 muhammadyahyaalvi</a>
+    <a href="https://www.instagram.com/its.yahya_alvi/" target="_blank">📸 Instagram</a>
+    <a href="https://github.com/Muhammad-Yahya-Alvi" target="_blank">💻 GitHub</a>
+  </div>
+</section>
+
+<footer>© 2026 Muhammad Yahya Alvi. Built with code.</footer>
+</div>
+
+<script>
+const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d');
+let w,h,particles=[];
+function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
+resize();addEventListener('resize',resize);
+for(let i=0;i<70;i++){particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+.3,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.3});}
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(94,234,212,0.5)';
+  particles.forEach(p=>{
+    p.x+=p.dx;p.y+=p.dy;
+    if(p.x<0||p.x>w)p.dx*=-1;
+    if(p.y<0||p.y>h)p.dy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+},{threshold:.2});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const skillObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%');
+      skillObs.disconnect();
+    }
+  });
+},{threshold:.3});
+const sb=document.querySelector('.skillbox');
+if(sb) skillObs.observe(sb);
+</script>
+</body>
+</html>
