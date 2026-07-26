@@ -17,10 +17,8 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow:hidden;height:100vh;}
 body.no-touch{cursor:none;}
-@media (max-width:640px){
+@media (max-width:860px){
   nav{padding:14px 5%;}
-  nav ul{gap:14px;}
-  nav a{font-size:12px;}
   nav .logo{font-size:14px;}
   section{padding:90px 6% 40px;}
   .grid{gap:16px;}
@@ -36,6 +34,21 @@ nav a{color:var(--muted);text-decoration:none;font-size:14px;transition:.3s;curs
 nav a:hover{color:var(--accent);}
 nav a.active{color:var(--accent);}
 
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px;z-index:20;}
+.hamburger span{width:24px;height:2px;background:var(--accent);border-radius:2px;transition:.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+@media (max-width:860px){
+  .hamburger{display:flex;}
+  nav ul{position:fixed;top:0;right:0;height:100vh;width:220px;background:var(--panel);
+    flex-direction:column;justify-content:center;align-items:flex-start;gap:26px;padding:0 32px;
+    transform:translateX(100%);transition:transform .35s ease;box-shadow:-10px 0 30px rgba(0,0,0,.5);}
+  nav ul.open{transform:translateX(0);}
+  nav a{font-size:15px;}
+}
+
 section{display:none;height:100vh;overflow-y:auto;flex-direction:column;justify-content:center;padding:100px 8% 60px;}
 section.active-section{display:flex;}
 
@@ -46,6 +59,11 @@ section.active-section{display:flex;}
 .hero-flex{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
 .hero-text{flex:1;min-width:300px;}
 .hero-visual{flex:0 0 340px;display:flex;justify-content:center;position:relative;}
+@media (max-width:860px){
+  .hero-flex{justify-content:center;text-align:center;gap:24px;}
+  .hero-visual{flex:0 0 auto;width:220px;transform:scale(.75);margin:0 auto;}
+  .hero .btns{justify-content:center;flex-wrap:wrap;}
+}
 .orb{
   width:300px;height:300px;border-radius:50%;
   background:radial-gradient(circle at 35% 30%,#1c2530,#0b0d10 70%);
@@ -154,13 +172,14 @@ a:hover ~ #cursor-ring,.btn:hover ~ #cursor-ring{width:90px;height:90px;}
 
 <nav>
   <div class="logo">YA</div>
-  <ul>
+  <ul id="navList">
     <li><a class="navlink active" data-target="home">Home</a></li>
     <li><a class="navlink" data-target="about">About</a></li>
     <li><a class="navlink" data-target="projects">Projects</a></li>
     <li><a class="navlink" data-target="skills">Skills</a></li>
     <li><a class="navlink" data-target="contact">Contact</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <section id="home" class="hero active-section">
@@ -377,7 +396,19 @@ function showSection(id){
   navlinks.forEach(l=>l.classList.toggle('active', l.dataset.target===id));
 }
 navlinks.forEach(link=>{
-  link.addEventListener('click',()=>showSection(link.dataset.target));
+  link.addEventListener('click',()=>{
+    showSection(link.dataset.target);
+    navList.classList.remove('open');
+    hamburger.classList.remove('open');
+  });
+});
+
+// hamburger menu toggle for mobile
+const hamburger=document.getElementById('hamburger');
+const navList=document.getElementById('navList');
+hamburger.addEventListener('click',()=>{
+  navList.classList.toggle('open');
+  hamburger.classList.toggle('open');
 });
 
 // custom cursor + trail wherever cursor goes
