@@ -15,7 +15,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow:hidden;height:100vh;cursor:none;}
 canvas#bg{position:fixed;inset:0;z-index:0;}
 .wrap{position:relative;z-index:1;}
 
@@ -23,10 +23,16 @@ nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-betwe
   padding:20px 6%;z-index:10;backdrop-filter:blur(8px);background:rgba(11,13,16,0.5);}
 nav .logo{font-weight:700;letter-spacing:2px;color:var(--accent);}
 nav ul{list-style:none;display:flex;gap:28px;}
-nav a{color:var(--muted);text-decoration:none;font-size:14px;transition:.3s;}
+nav a{color:var(--muted);text-decoration:none;font-size:14px;transition:.3s;cursor:pointer;}
 nav a:hover{color:var(--accent);}
+nav a.active{color:var(--accent);}
 
-section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 8%;}
+section{display:none;height:100vh;overflow-y:auto;flex-direction:column;justify-content:center;padding:100px 8% 60px;}
+section.active-section{display:flex;}
+
+.wave-divider{width:100%;overflow:hidden;line-height:0;margin-top:20px;height:60px;position:relative;}
+.wave-divider svg{position:absolute;top:0;left:0;width:200%;height:60px;animation:waveSlide 8s linear infinite;}
+@keyframes waveSlide{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
 .hero-flex{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
 .hero-text{flex:1;min-width:300px;}
@@ -81,8 +87,16 @@ h2.section-title{font-size:2.2rem;margin-bottom:40px;}
 h2.section-title span{color:var(--accent);}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
-.card{background:var(--panel);border:1px solid #1e232b;border-radius:16px;padding:28px;transition:.35s;position:relative;overflow:hidden;}
-.card:hover{transform:translateY(-8px);border-color:var(--accent);box-shadow:0 20px 40px rgba(0,0,0,.4);}
+.card{background:var(--panel);border:1px solid #1e232b;border-radius:16px;padding:28px;transition:.2s;position:relative;overflow:hidden;}
+.card:hover{border-color:var(--accent);box-shadow:0 20px 40px rgba(0,0,0,.4);animation:cardShake .4s ease;}
+@keyframes cardShake{
+  0%{transform:translateY(0) rotate(0);}
+  20%{transform:translateY(-8px) rotate(-1.5deg);}
+  40%{transform:translateY(-6px) rotate(1.5deg);}
+  60%{transform:translateY(-10px) rotate(-1deg);}
+  80%{transform:translateY(-7px) rotate(1deg);}
+  100%{transform:translateY(-8px) rotate(0);}
+}
 .card h3{color:var(--accent);margin-bottom:10px;font-size:1.15rem;}
 .card p{color:var(--muted);font-size:.92rem;line-height:1.5;}
 .card .lang{display:inline-block;margin-top:14px;font-size:.75rem;color:var(--accent2);border:1px solid var(--accent2);padding:3px 10px;border-radius:20px;}
@@ -98,32 +112,58 @@ h2.section-title span{color:var(--accent);}
 .contact a{color:var(--accent);text-decoration:none;}
 
 footer{text-align:center;padding:30px;color:var(--muted);font-size:.8rem;}
+
+.cursor-blink{animation:blink 1s step-start infinite;color:var(--accent);}
+@keyframes blink{50%{opacity:0;}}
+
+#cursor-dot{position:fixed;width:14px;height:14px;border-radius:50%;background:var(--accent);
+  pointer-events:none;z-index:100001;transform:translate(-50%,-50%);transition:transform .15s ease;
+  box-shadow:0 0 20px 6px rgba(94,234,212,.6);}
+#cursor-ring{position:fixed;width:60px;height:60px;border-radius:50%;border:2px solid var(--accent2);
+  pointer-events:none;z-index:100000;transform:translate(-50%,-50%);transition:transform .18s ease,width .2s,height .2s,opacity .2s;opacity:.7;}
+a:hover ~ #cursor-ring,.btn:hover ~ #cursor-ring{width:90px;height:90px;}
+.trail{position:fixed;width:14px;height:14px;border-radius:50%;
+  pointer-events:none;z-index:99999;opacity:.9;filter:blur(1px);}
+.scroll-burst{position:fixed;border-radius:50%;pointer-events:none;z-index:99998;}
+.ripple{position:fixed;border:2px solid var(--accent);border-radius:50%;pointer-events:none;z-index:99997;}
+
+#splash{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center;
+  transition:opacity .8s ease, visibility .8s;}
+#splash.hide{opacity:0;visibility:hidden;}
+#splashName{font-size:clamp(2rem,6vw,4rem);font-weight:700;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;
+  transition:transform 1s ease, opacity 1s ease;}
+#splashName.fly{transform:translate(calc(-46vw + 60px), calc(-46vh + 30px)) scale(.22);opacity:.9;}
 </style>
 </head>
 <body>
 <canvas id="bg"></canvas>
+<div id="splash"><div id="splashName"><span id="splashText"></span><span class="cursor-blink">|</span></div></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 <div class="wrap">
 
 <nav>
   <div class="logo">YA</div>
   <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a class="navlink active" data-target="home">Home</a></li>
+    <li><a class="navlink" data-target="about">About</a></li>
+    <li><a class="navlink" data-target="projects">Projects</a></li>
+    <li><a class="navlink" data-target="skills">Skills</a></li>
+    <li><a class="navlink" data-target="contact">Contact</a></li>
   </ul>
 </nav>
 
-<section id="home" class="hero">
+<section id="home" class="hero active-section">
   <div class="hero-flex">
     <div class="hero-text">
-      <div class="tag">Software Engineering Student · Java Developer</div>
-      <h1>Muhammad Yahya Alvi</h1>
-      <p>Building real-world projects, one commit at a time.</p>
+      <div class="tag">Precision · Innovation · Excellence</div>
+      <h1 id="typedName" style="opacity:1;">Muhammad Yahya Alvi</h1>
+      <p>Make your dream software with Yahya.</p>
       <div class="btns">
-        <a class="btn filled" href="#projects">See my work</a>
+        <a class="btn filled navlink" data-target="projects" href="javascript:void(0)">See my work</a>
         <a class="btn" href="https://github.com/Muhammad-Yahya-Alvi" target="_blank">GitHub ↗</a>
+        <a class="btn" href="Muhammad_Yahya_Alvi_Resume.pdf" download>Resume</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -183,6 +223,11 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:.8rem;}
       <div class="float-chip chip2">🗄️ MySQL</div>
       <div class="float-chip chip3">🔧 OOP</div>
     </div>
+  </div>
+  <div class="wave-divider">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C150,60 350,0 600,30 C850,60 1050,0 1200,30 L1200,60 L0,60 Z" fill="rgba(94,234,212,.15)"/>
+    </svg>
   </div>
 </section>
 
@@ -283,6 +328,115 @@ const skillObs=new IntersectionObserver(entries=>{
 },{threshold:.3});
 const sb=document.querySelector('.skillbox');
 if(sb) skillObs.observe(sb);
+
+// splash intro: type name big, then fly it into place & reveal site
+const splashText=document.getElementById('splashText');
+const splashName=document.getElementById('splashName');
+const splash=document.getElementById('splash');
+const fullName="Muhammad Yahya Alvi";
+let si=0;
+function typeSplash(){
+  if(si<=fullName.length){
+    splashText.textContent=fullName.slice(0,si);
+    si++;
+    setTimeout(typeSplash,110);
+  } else {
+    setTimeout(()=>{
+      splashName.classList.add('fly');
+      setTimeout(()=>{
+        splash.classList.add('hide');
+        document.querySelectorAll('#home .reveal, #home').forEach(el=>el.classList.add('show'));
+      },700);
+    },500);
+  }
+}
+typeSplash();
+
+// click-based nav: no scrolling, click an option to view that section
+const navlinks=document.querySelectorAll('.navlink');
+const sections=document.querySelectorAll('main section, .wrap > section');
+function showSection(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active-section'));
+  const target=document.getElementById(id);
+  if(target){
+    target.classList.add('active-section');
+    target.querySelectorAll('.reveal').forEach((el,i)=>{
+      el.classList.remove('show');
+      setTimeout(()=>el.classList.add('show'),80*i);
+    });
+  }
+  navlinks.forEach(l=>l.classList.toggle('active', l.dataset.target===id));
+}
+navlinks.forEach(link=>{
+  link.addEventListener('click',()=>showSection(link.dataset.target));
+});
+
+// custom cursor + trail wherever cursor goes
+const dot=document.getElementById('cursor-dot'), ring=document.getElementById('cursor-ring');
+const trailColors=['#5eead4','#818cf8','#f472b6','#facc15','#34d399'];
+document.addEventListener('mousemove',e=>{
+  dot.style.left=e.clientX+'px'; dot.style.top=e.clientY+'px';
+  ring.style.left=e.clientX+'px'; ring.style.top=e.clientY+'px';
+  for(let k=0;k<2;k++){
+    const t=document.createElement('div');
+    t.className='trail';
+    const ox=(Math.random()-.5)*30, oy=(Math.random()-.5)*30;
+    t.style.left=(e.clientX+ox)+'px'; t.style.top=(e.clientY+oy)+'px';
+    const size=Math.random()*10+10;
+    t.style.width=size+'px'; t.style.height=size+'px';
+    t.style.background=trailColors[Math.floor(Math.random()*trailColors.length)];
+    t.style.boxShadow=`0 0 18px 6px ${t.style.background}`;
+    document.body.appendChild(t);
+    requestAnimationFrame(()=>{ t.style.opacity='0'; t.style.transform='scale(3)'; t.style.transition='opacity .8s, transform .8s'; });
+    setTimeout(()=>t.remove(),800);
+  }
+});
+document.querySelectorAll('a,.btn,.card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='90px';ring.style.height='90px';ring.style.opacity='1';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='60px';ring.style.height='60px';ring.style.opacity='.7';});
+});
+
+// spreading ripple everywhere on the page, not just on buttons
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; });
+setInterval(()=>{
+  const r=document.createElement('div');
+  r.className='ripple';
+  r.style.left=mx+'px'; r.style.top=my+'px';
+  r.style.width='10px'; r.style.height='10px';
+  r.style.transform='translate(-50%,-50%)';
+  r.style.opacity='.8';
+  r.style.borderColor=trailColors[Math.floor(Math.random()*trailColors.length)];
+  document.body.appendChild(r);
+  requestAnimationFrame(()=>{
+    r.style.transition='width .9s ease-out, height .9s ease-out, opacity .9s ease-out';
+    r.style.width='140px'; r.style.height='140px'; r.style.opacity='0';
+  });
+  setTimeout(()=>r.remove(),900);
+},250);
+
+// colorful burst on scroll
+let lastScrollBurst=0;
+window.addEventListener('scroll',()=>{
+  const now=Date.now();
+  if(now-lastScrollBurst<80) return;
+  lastScrollBurst=now;
+  for(let i=0;i<3;i++){
+    const b=document.createElement('div');
+    b.className='scroll-burst';
+    const size=Math.random()*16+8;
+    b.style.width=size+'px'; b.style.height=size+'px';
+    b.style.left=(Math.random()*window.innerWidth)+'px';
+    b.style.top=(Math.random()*window.innerHeight)+'px';
+    const c=trailColors[Math.floor(Math.random()*trailColors.length)];
+    b.style.background=c;
+    b.style.boxShadow=`0 0 20px 6px ${c}`;
+    b.style.opacity='.85';
+    document.body.appendChild(b);
+    requestAnimationFrame(()=>{ b.style.transition='opacity .9s, transform .9s'; b.style.opacity='0'; b.style.transform='scale(3)'; });
+    setTimeout(()=>b.remove(),900);
+  }
+});
 </script>
 </body>
 </html>
