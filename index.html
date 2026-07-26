@@ -15,7 +15,16 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow:hidden;height:100vh;cursor:none;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow:hidden;height:100vh;}
+body.no-touch{cursor:none;}
+@media (max-width:640px){
+  nav{padding:14px 5%;}
+  nav ul{gap:14px;}
+  nav a{font-size:12px;}
+  nav .logo{font-size:14px;}
+  section{padding:90px 6% 40px;}
+  .grid{gap:16px;}
+}
 canvas#bg{position:fixed;inset:0;z-index:0;}
 .wrap{position:relative;z-index:1;}
 
@@ -395,6 +404,39 @@ document.querySelectorAll('a,.btn,.card').forEach(el=>{
   el.addEventListener('mouseenter',()=>{ring.style.width='90px';ring.style.height='90px';ring.style.opacity='1';});
   el.addEventListener('mouseleave',()=>{ring.style.width='60px';ring.style.height='60px';ring.style.opacity='.7';});
 });
+
+// touch device detection: hide desktop-style cursor dot/ring on touch, keep trail/ripple fun
+const isTouch=matchMedia('(pointer:coarse)').matches || 'ontouchstart' in window;
+if(isTouch){
+  dot.style.display='none';
+  ring.style.display='none';
+} else {
+  document.body.classList.add('no-touch');
+}
+
+document.addEventListener('touchmove',e=>{
+  const touch=e.touches[0];
+  if(!touch) return;
+  mx=touch.clientX; my=touch.clientY;
+  for(let k=0;k<2;k++){
+    const t=document.createElement('div');
+    t.className='trail';
+    const ox=(Math.random()-.5)*30, oy=(Math.random()-.5)*30;
+    t.style.left=(touch.clientX+ox)+'px'; t.style.top=(touch.clientY+oy)+'px';
+    const size=Math.random()*10+10;
+    t.style.width=size+'px'; t.style.height=size+'px';
+    t.style.background=trailColors[Math.floor(Math.random()*trailColors.length)];
+    t.style.boxShadow=`0 0 18px 6px ${t.style.background}`;
+    document.body.appendChild(t);
+    requestAnimationFrame(()=>{ t.style.opacity='0'; t.style.transform='scale(3)'; t.style.transition='opacity .8s, transform .8s'; });
+    setTimeout(()=>t.remove(),800);
+  }
+},{passive:true});
+document.addEventListener('touchstart',e=>{
+  const touch=e.touches[0];
+  if(!touch) return;
+  mx=touch.clientX; my=touch.clientY;
+},{passive:true});
 
 // spreading ripple everywhere on the page, not just on buttons
 let mx=0,my=0;
