@@ -1,181 +1,71 @@
-# 🚀 3D Portfolio
+<div align="center">
 
-A jaw-dropping developer portfolio packed with interactive 3D animations, buttery smooth transitions, and a space-themed aesthetic. Not your average portfolio template! This one has a fully interactive 3D keyboard where each keycap is a skill.
+<img src="https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=700&size=28&duration=2800&pause=900&color=90C1BE&center=true&vCenter=true&width=720&lines=Muhammad+Yahya+Alvi;Software+Engineering+Student;Java+%7C+MySQL+%7C+TypeScript+%7C+AI" alt="Muhammad Yahya Alvi animated introduction" />
 
-> **Free to use!** This portfolio is open source. If you use it, a credit/link back would be really appreciated 🙏
+<p>Interactive dark-teal developer portfolio with smooth scroll motion, a 3D skills keyboard, and project-focused storytelling.</p>
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Naresh-Khatri/3d-portfolio)
+<a href="https://github.com/Muhammad-Yahya-Alvi/Protfolio"><img src="https://img.shields.io/badge/GitHub-024644?style=for-the-badge&logo=github&logoColor=C2E1DF" alt="GitHub repository" /></a>
+<a href="https://vercel.com/new"><img src="https://img.shields.io/badge/Deploy_on_Vercel-066A67?style=for-the-badge&logo=vercel&logoColor=C2E1DF" alt="Deploy on Vercel" /></a>
+<a href="https://www.linkedin.com/in/muhammad-yahya-alvi-35a893433/"><img src="https://img.shields.io/badge/LinkedIn-457B79?style=for-the-badge&logo=linkedin&logoColor=C2E1DF" alt="LinkedIn" /></a>
 
-![Portfolio Preview](https://github.com/Naresh-Khatri/Portfolio/blob/main/public/assets/projects-screenshots/portfolio/landing.png?raw=true)
+<br />
 
-## ✨ Features
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:024644,50:066A67,100:90C1BE&height=120&section=header" alt="Teal animated wave" />
 
-- **Interactive 3D Keyboard** — Custom Spline keyboard where each keycap represents a skill, revealing titles and descriptions on hover/press
-- **Buttery Animations** — GSAP + Framer Motion powered scroll, hover, and reveal animations
-- **Space Theme** — Floating particles on a dark canvas for a cosmic vibe
-- **Light & Dark Mode** — Full theme support with cheeky disclaimer toasts
-- **Responsive** — Works across all screen sizes
-| **Framework** | Next.js 14, React 18, TypeScript |
-| **Styling** | Tailwind CSS, Shadcn UI, Aceternity UI |
-| **Animation** | GSAP, Framer Motion |
-| **3D** | Spline Runtime |
-| **Email** | Resend |
-| **Misc** | Lenis (smooth scroll), Zod, next-themes |
+</div>
 
----
+## About
 
-## 🚀 Getting Started
+I am **Muhammad Yahya Alvi**, a Software Engineering student at Sindh Madressatul Islam University. I build practical systems with Java, OOP, MySQL, TypeScript, JavaScript, and Node.js while expanding into Spring Boot, full-stack development, and AI integration.
 
-### Prerequisites
+## What is inside
 
-- Node.js (v18+)
-- pnpm (recommended), npm, or yarn
+- Smooth scroll and section reveal animations
+- Interactive 3D Spline keyboard for skills
+- Dark-only teal visual system
+- Responsive mobile navigation and layouts
+- Project cards with modal details and repository links
+- Contact form with optional Resend configuration
+- Downloadable CV and dedicated resume view
 
-### Installation
+## Featured work
 
-1. **Clone the repository:**
+| Project | Focus | Link |
+|---|---|---|
+| **YAX-AI** | Node.js foundation for structured multi-modal AI integrations | [Repository](https://github.com/Muhammad-Yahya-Alvi/YAX-AI) |
+| **ERP Bridge** | ERP workflow organization with JavaScript business tools | [Organization](https://github.com/ERP-Bridge) |
+| **University Admission System** | Java Swing, MySQL, authentication, and admin workflows | [Repository](https://github.com/Muhammad-Yahya-Alvi/UniversityAdmissionSystem) |
+| **Library Management System** | Books, members, checkouts, returns, and transactions | [Repository](https://github.com/Muhammad-Yahya-Alvi/library-management-system) |
+| **SMIU Attendance System** | Academic attendance tracking and reporting | [Repository](https://github.com/Muhammad-Yahya-Alvi/SMIU-Attendance-Management-System) |
 
-    ```bash
-    git clone https://github.com/Naresh-Khatri/3d-portfolio.git
-    cd 3d-portfolio
-    ```
+## Tech stack
 
-2. **Install dependencies:**
+`Next.js` `React` `TypeScript` `JavaScript` `Java` `C/C++` `MySQL` `Node.js` `GSAP` `Motion` `Spline` `Tailwind CSS` `GitHub`
 
-    ```bash
-    pnpm install
-    ```
+## Run locally
 
-3. **Set up environment variables:**
-
-    Copy `.env.example` to `.env.local` and fill in the values:
-
-    ```bash
-    cp .env.example .env.local
-    ```
-
-    | Variable | Required | Description |
-    |---|---|---|
-    | `RESEND_API_KEY` | Yes | API key from [Resend](https://resend.com) for the contact form |
-    | `NEXT_PUBLIC_WS_URL` | No | WebSocket server URL for realtime features (cursors, chat, presence) |
-    | `UMAMI_DOMAIN` | No | Umami analytics script URL |
-    | `UMAMI_SITE_ID` | No | Umami website ID |
-
-4. **Run the development server:**
-
-    ```bash
-    pnpm dev
-    ```
-
-5. Open [http://localhost:3000](http://localhost:3000) and see the magic ✨
-
----
-
-## 🎨 Make It Your Own
-
-All personal info is centralized in [`src/data/config.ts`](src/data/config.ts). Edit this single file to rebrand the portfolio:
-
-```ts
-const config = {
-  title: "Your Name | Your Title",
-  description: {
-    long: "Your long description for SEO...",
-    short: "Your short description...",
-  },
-  keywords: ["your", "keywords"],
-  author: "Your Name",
-  email: "you@example.com",
-  site: "https://yoursite.com",
-
-  // GitHub stars button in the header
-  githubUsername: "your-github-username",
-  githubRepo: "your-repo-name",
-
-  social: {
-    twitter: "https://x.com/you",
-    linkedin: "https://linkedin.com/in/you",
-    instagram: "https://instagram.com/you",
-    facebook: "https://facebook.com/you",
-    github: "https://github.com/you",
-  },
-};
+```bash
+npm install --legacy-peer-deps
+npm run dev
 ```
 
-Other files you'll want to customize:
+Open [http://localhost:3000](http://localhost:3000).
 
-| File | What to change |
-|---|---|
-| `src/data/projects.tsx` | Your projects, screenshots, descriptions, and tech stacks |
-| `src/data/constants.ts` | Skills list (name, description, icon) and work experience |
-| `public/assets/` | Your images, OG image, and project screenshots |
+The contact form returns a friendly configuration response until `RESEND_API_KEY` is added to `.env.local`.
 
----
+## Deploy on Vercel
 
-## ⌨️ Updating the 3D Keyboard Skills
+1. Import [Muhammad-Yahya-Alvi/Protfolio](https://github.com/Muhammad-Yahya-Alvi/Protfolio) in Vercel.
+2. Keep the framework preset as **Next.js**.
+3. Add `RESEND_API_KEY` only if email delivery is required.
+4. Deploy. Vercel will run the Next.js build automatically.
 
-The 3D keyboard keycaps are baked into a Spline file. To update the skills displayed on the keyboard:
+<div align="center">
 
-1. **Import** the `public/assets/skills-keyboard.spline` file into [Spline](https://spline.design/)
-2. **Unhide** the keycap objects you want to edit
-3. **Update** the logo images on each keycap to your new skill icons
-4. **Rename** each keycap object to match the skill's `name` field in `src/data/constants.ts` (e.g. `js`, `react`, `docker`)
-5. **Hide** all keycap objects again
-6. **Export** the scene and overwrite `public/assets/skills-keyboard.spline`
+<img src="https://github-readme-stats.vercel.app/api?username=Muhammad-Yahya-Alvi&show_icons=true&hide_border=true&bg_color=024644&title_color=C2E1DF&text_color=90C1BE&icon_color=90C1BE" alt="Muhammad Yahya Alvi GitHub stats" />
 
-After updating the Spline file, make sure `src/data/constants.ts` has matching entries for every skill on the keyboard:
+<br />
 
-```ts
-// Each keycap object name in Spline must match a key in SKILLS
-export const SKILLS: Record<SkillNames, Skill> = {
-  js: { name: "js", label: "JavaScript", shortDescription: "...", ... },
-  react: { name: "react", label: "React", shortDescription: "...", ... },
-  // ... add/remove entries to match your keyboard
-};
-```
+<sub>Built with curiosity, teal, and a lot of iteration.</sub>
 
-The `SkillNames` enum, `SKILLS` record, and the Spline keycap names must all stay in sync for the keyboard interactions to work correctly.
-
----
-
-## 🔌 Realtime Features (Optional)
-
-The portfolio supports optional realtime features powered by a **separate backend API**:
-
-- 🖱️ **Live cursors** — See other visitors' cursors in realtime
-- 👥 **Online presence** — Shows who's currently on the site
-- 💬 **Chat** — Live chat between visitors
-
-These features activate automatically when the `NEXT_PUBLIC_WS_URL` environment variable is set. Without it, the portfolio works perfectly fine as a static site — no realtime features, no backend dependency.
-
-> [!NOTE]
-> The backend API is **not open source**. This is intentional! Too many people have cloned the portfolio and claimed they built it from scratch. The realtime server stays private to keep the live experience unique make make it standout.
-
-
----
-
-## 🚀 Deployment
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Naresh-Khatri/3d-portfolio)
-
-This site is deployed on **Vercel**. To deploy your own:
-
-1. Push your code to a GitHub repository
-2. Connect the repository to [Vercel](https://vercel.com)
-3. Add your environment variables in the Vercel dashboard
-4. Vercel handles the rest — automatic deployments on every push
-
----
-
-## 🤝 Contributing
-
-If you'd like to contribute or suggest improvements, feel free to open an issue or submit a pull request. All contributions are welcome!
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-If you use this portfolio, a credit or link back to the [original repo](https://github.com/Naresh-Khatri/3d-portfolio) would be much appreciated ❤️
-
-Note on analytics: a deployed copy reports its own hostname once per browser (nothing else — no visitor, page, or referrer data) so I can see where the template gets used.
+</div>
